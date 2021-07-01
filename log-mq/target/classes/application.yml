@@ -1,0 +1,70 @@
+server:
+  port: 9004
+  servlet:
+    context-path: /log
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}
+  client:
+    service-url:
+      defaultZone: http://cloud:cloud@127.0.0.1:9001/eureka
+    fetch-registry: true
+    register-with-eureka: true
+
+spring:
+  application:
+    name: service-log
+  sql:
+    init:
+      enabled: false
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo_db?useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      connection-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 30000
+      idle-timeout: 30000
+      connection-test-query: select 1
+
+  cloud:
+    stream:
+      binders:
+        kafka_log1:
+          type: kafka
+          environment:
+            spring:
+              kafka:
+                host: localhost
+                port: 9092
+                publisher-confirms: true
+      bindings:
+        logms-in-0:
+          destination: logexchange
+          group: logqueue
+          binder: kafka_log1
+
+
+mybatis-plus:
+  type-aliases-package: com.leiran.common.bean.*
+  global-config:
+    db-config:
+      id-type: id_worker_str
+      # 全局配置逻辑删除字段，应该使用bean的属性，而非sql列名
+      logic-delete-field: isDelete
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      table-prefix: demo_tb_
+      table-underline: true
+  configuration:
+    map-underscore-to-camel-case: true
+    #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml

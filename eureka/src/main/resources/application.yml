@@ -1,0 +1,20 @@
+server:
+  port: 9001
+eureka:
+  instance:
+    hostname: 127.0.0.1
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 10
+    registry:
+      default-open-for-traffic-count: 1
+      expected-number-of-clients-sending-renews: 1
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
+spring:
+  security:
+    user:
+      name: cloud
+      password: cloud

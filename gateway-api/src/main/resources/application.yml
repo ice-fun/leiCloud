@@ -1,0 +1,53 @@
+server:
+  port: 9200
+
+spring:
+  application:
+    name: gateway-api
+
+  cloud:
+    gateway:
+      routes:
+        - id: route-article
+          uri: lb://service-article
+          predicates:
+            - Path=/demo/user/article/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/article
+            - name: CircuitBreaker
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallBack
+
+        - id: route-login
+          uri: lb://service-article
+          predicates:
+            - Path=/demo/user/login/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/article
+            - name: CircuitBreaker
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallBack
+
+        - id: route-news
+          uri: lb://service-news
+          predicates:
+            - Path=/demo/user/news/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/news
+            - name: CircuitBreaker
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallBack
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://cloud:cloud@127.0.0.1:9001/eureka
+    fetch-registry: true
+    register-with-eureka: true

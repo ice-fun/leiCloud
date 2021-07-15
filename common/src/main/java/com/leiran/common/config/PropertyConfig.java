@@ -23,10 +23,7 @@ public class PropertyConfig {
 
     //角色权限
     public final static String ROLE_ADMIN = "ROLE_ADMIN";  // 超级管理员
-    public final static String ROLE_CASTING = "ROLE_CASTING";  // 咖位
-    public final static String ROLE_INFO = "ROLE_INFO";  // 资料员
-    public final static String ROLE_USER = "ROLE_USER";  // 用户1
-    public final static String ROLE_CUSTOMER = "ROLE_CUSTOMER";   // 用户2
+    public final static String ROLE_USER = "ROLE_USER";  // 用户
     public final static String ROLE_VISITOR = "ROLE_VISITOR"; // 游客
 
 

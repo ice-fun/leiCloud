@@ -40,6 +40,10 @@
             <artifactId>spring-cloud-stream-binder-kafka</artifactId>
         </dependency>
         <!--   MQ 异步存储日志，看实际需求开启或关闭      -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

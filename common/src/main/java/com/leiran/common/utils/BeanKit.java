@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static java.lang.String.format;
 
+@SuppressWarnings("unchecked")
 public class BeanKit {
     private static final Map<String, BeanCopier> BEAN_COPIER_CACHE = new ConcurrentHashMap<>();
     private static final Map<String, ConstructorAccess> CONSTRUCTOR_ACCESS_CACHE = new ConcurrentHashMap<>();
